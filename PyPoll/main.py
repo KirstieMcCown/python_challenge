@@ -10,9 +10,8 @@ election_csv = os.path.join("Resources", "election_data.csv")
 # Set a variable for the net total amount of votes in the dataset (exclude header row)
 total_votes = 0
 
-# Create empty lists to hold the list of candidates and votes per candidate
+# Create empty lists to hold the list of candidates
 candidates = []
-candidate_votes = []
 
 # Open and read csv file 
 with open(election_csv) as csvfile:
@@ -28,16 +27,15 @@ with open(election_csv) as csvfile:
         total_votes = int(total_votes+1)
 
 # Print to check total votes is being calculated correctly
-# print(total_votes)
+print(total_votes)
 
         # Append the candidates into the list
         candidates.append(row[2])
-        
+          
         # Create a set with only unique candidate values 
         unique_candidates = set(candidates)
-        unique_candidate_count = len(unique_candidates)
-        
-print(unique_candidate_count)
+
+print(unique_candidates)
         
         # profit_increase.append(float(row[1]))
         # profit_increase.sort()
