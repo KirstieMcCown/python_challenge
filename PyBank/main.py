@@ -14,10 +14,9 @@ total_p_l = 0.00
 total_months = 0
 
 # Create empty lists to hold the profit increase, decrease and associated dates
-profit_increase = []
-profit_i_month = []
-profit_decrease = []
-profit_d_month = []
+profit = []
+month = []
+
 
 # Open and read csv file 
 with open(budget_csv) as csvfile:
@@ -47,20 +46,20 @@ with open(budget_csv) as csvfile:
 # Print to check average change is being calculated correctly
 # print(average_change)
 
-        # Find greatest increase in profits (amount) over the entire period
-        profit_increase.append(float(row[1]))
-        print(max(profit_increase))
+        # Find greatest increase or decrease in profits (amount) over the entire period
+        profit.append(float(row[1]))
+        #print(max(profit))
+        #print(min(profit))
         
+
+
         # Find date of the greatest increase in profits over the entire period
-        # profit_i_month.append(str(row[0]))
-        # print(profit_i_month)
+        month.append(str(row[0]))
+        # print(month)
 
-        # Find greatest decrease in profits (amount) over the entire period
-        # profit_decrease
-
-        # Find date of the greatest decrease in profits over the entire period
-        # profit_d_month.append(str(row[0]))
-        # print(profit_d_month)
+# Find date of the greatest decrease in profits over the entire period
+# profit_d_month.append(str(row[0]))
+# print(profit_d_month)
 
 
 # Print the analysis to the terminal and export a text file with the results
@@ -69,17 +68,17 @@ with open(budget_csv) as csvfile:
 print("Financial Analysis")
 print("----------------------------")
 
-# Print total number of months
-print(f"Total Months: {total_months} months")
+# # Print total number of months
+# print(f"Total Months: {total_months} months")
 
-# Print net total profit/loss  
-print(f"Total: ${total_p_l:.0f}")
+# # Print net total profit/loss  
+# print(f"Total: ${total_p_l:.0f}")
 
-# Print average change in profit/loss
-print(f"Average Change: ${average_change:.2f}")
+# # Print average change in profit/loss
+# print(f"Average Change: ${average_change:.2f}")
 
-# Print Greatest Profit Increase and Corresponding Date 
-# print(f"Greatest Increase in Profits: {profit_i_month} {profit_increase:.2f}")
+# # Print Greatest Profit Increase and Corresponding Date 
+# print(f"Greatest Increase in Profits: {month} (${max(profit):.2f})")
 
-# Print Greatest Profit Decrease and Corresponding Date
-# print(f"Greatest Decrease in Profits: {profit_d_month} {profit_decrease:.2f}"
+# # Print Greatest Profit Decrease and Corresponding Date
+# print(f"Greatest Decrease in Profits: {month} (${min(profit):.2f})")
