@@ -48,18 +48,27 @@ with open(budget_csv) as csvfile:
 
         # Find greatest increase or decrease in profits (amount) over the entire period
         profit.append(float(row[1]))
-        #print(max(profit))
-        #print(min(profit))
-        
 
+        # Store a variable for max profit
+        max_profit = (max(profit))
+        # print(max_profit)
+
+        # Store a variable for min profit
+        min_profit = (min(profit))
+        # print(min_profit)
+
+        # Set a variable for the increase/decrease date
+        max_date = str(row[0])
+        # print(date)
+
+        min_date = str(row[0]) 
 
         # Find date of the greatest increase in profits over the entire period
-        month.append(str(row[0]))
-        # print(month)
+        if row[1] == (max(profit)):
+                max_date = str(row[0])
 
-# Find date of the greatest decrease in profits over the entire period
-# profit_d_month.append(str(row[0]))
-# print(profit_d_month)
+        if row[1] == (min(profit)):
+                min_date = str(row[0])
 
 
 # Print the analysis to the terminal and export a text file with the results
@@ -68,17 +77,17 @@ with open(budget_csv) as csvfile:
 print("Financial Analysis")
 print("----------------------------")
 
-# # Print total number of months
-# print(f"Total Months: {total_months} months")
+# Print total number of months
+print(f"Total Months: {total_months} months")
 
-# # Print net total profit/loss  
-# print(f"Total: ${total_p_l:.0f}")
+# Print net total profit/loss  
+print(f"Total: ${total_p_l:.0f}")
 
-# # Print average change in profit/loss
-# print(f"Average Change: ${average_change:.2f}")
+# Print average change in profit/loss
+print(f"Average Change: ${average_change:.2f}")
 
-# # Print Greatest Profit Increase and Corresponding Date 
-# print(f"Greatest Increase in Profits: {month} (${max(profit):.2f})")
+# Print Greatest Profit Increase and Corresponding Date 
+print(f"Greatest Increase in Profits: {max_date} (${max(profit):.2f})")
 
-# # Print Greatest Profit Decrease and Corresponding Date
-# print(f"Greatest Decrease in Profits: {month} (${min(profit):.2f})")
+# Print Greatest Profit Decrease and Corresponding Date
+print(f"Greatest Decrease in Profits: {min_date} (${min(profit):.2f})")
