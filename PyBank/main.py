@@ -16,13 +16,27 @@ total_months = 0
 # Create empty lists to hold the profit increase, decrease and associated dates
 profit = []
 month = []
+change = []
 
-# Set a variable for max profit, min profit and associated months 
-max_profit = 0
-max_profit_month = ""
+# Set a variable for greatest increase and decrease and associated months 
+greatest_increase = 0
+greatest_increase_month = ""
 
-min_profit = 0
-min_profit_month = ""
+greatest_decrease = 0
+greatest_decrease_month = ""
+
+# Set a variable for each row total 
+rowtotal = 0
+
+# Set a variable for the first row
+firstrow = 0
+
+# Set a variable for the last row
+lastrow = 0
+
+# Set a variable for the previous row value
+previousvalue = 0 
+
 
 # Open and read csv file 
 with open(budget_csv) as csvfile:
@@ -34,55 +48,73 @@ with open(budget_csv) as csvfile:
     
     # Read through each row of data after the header
     for row in csvreader:
-        # Add total months 
-        total_months = int(total_months+1)
-
-# Print to check total months is being calculated correctly
-# print(total_months)
 
         # Add profit amount to the total 
         total_p_l = (float(row[1]) + total_p_l)
        
 # Print to check total profit/loss is being calculated correctly
 # print(total_p_l)    
-# 
-        # Calculate the average of the changes in "Profit/Losses" over the entire period
-        # change = (max_profit - min_profit)
-        average_change = (total_p_l/total_months)
 
-# Print to check average change is being calculated correctly
-# print(average_change)
+# Calculate the first and last row to determine the average change
+   
+        if total_months == 0:
+            firstrow = (float(row[1]))
 
-        # Find greatest increase or decrease in profits (amount) over the entire period
+        else: 
+            lastrow = (float(row[1])) 
+
+# Pring the first and last row        
+# print (firstrow)
+# print (lastrow)
+
+        # Add total months 
+        total_months = (total_months+1)
+
+# Print to check total months is being calculated correctly
+# print(total_months)
+        
+    # Find greatest increase or decrease in profits (amount) over the entire period
         profit.append(float(row[1]))
 
-        # Find greatest increase or decrease in profits (month) over the entire period
+        change.append(float(row[1]) - previousvalue)
+    
+        previousvalue = (float(row[1]))
+
+# Find greatest increase or decrease in profits (month) over the entire period
+
         month.append(str(row[0]))
 
-# Assign new values for min and max profit variables
+# Assign values for max and min profit variables
 
         max_profit = (max(profit))
         min_profit = (min(profit))
 
-# print(max_profit)
-# print(min_profit)
+# Assign values for greatest increase and decrease variables
+        greatest_increase = (max(change))
+        greatest_decrease = (min(change))
 
-# Find max profit and max profit date
+# Find date of greatest increase in profits
         if float(row[1]) == (max(profit)):
-                max_profit_month = (row[0])
+                greatest_increase_month = (row[0])
 
 # Print max profit month to check date is correct
-# print(max_profit_month)
+# print(greatest_increase_month)
 
-# Find max profit and max profit date
-        if float(row[1]) == min(profit):
-                min_profit_month =  row[0]
+# Find date of greatest decrease in progits
+        if float(row[1]) == (min(profit)):
+                greatest_decrease_month =  (row[0])
 
 # Print max profit month to check date is correct
-# print(min_profit_month)
+# print(greatest_decrease_month)
+
+# Calculate the average of the changes in "Profit/Losses" over the entire period
+average_change = (firstrow - lastrow)/(1-total_months)
+
+# Print to check average change is being calculated correctly
+# print(average_change)
 
 
-# Print the analysis to the terminal
+# # Print the analysis to the terminal
 
 # Print Header
 print("Financial Analysis")
@@ -98,22 +130,31 @@ print(f"Total: ${total_p_l:.0f}")
 print(f"Average Change: ${average_change:.2f}")
 
 # Print Greatest Profit Increase and Corresponding Date 
-print(f"Greatest Increase in Profits: {max_profit_month} (${max_profit:.2f})")
+print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase:.2f})")
 
 # Print Greatest Profit Decrease and Corresponding Date
-print(f"Greatest Decrease in Profits: {min_profit_month} (${min_profit:.2f})")
+print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease:.2f})")
 
 # Export a text file with the results
-# output_path = os.path.join("..", "Analysis", "Financial_Analysis.csv")
+# Specify the file to write to
+output_path = os.path.join("Analysis", "Financial_Analysis.csv")
 
-# with open (output_path, "w", newline-"") as csvfile:
-#         csvwriter.writerow("Financial Analysis")
-#         csvwriter.writerow("----------------------------")
-#         csvwrite.writerow(f"Total Months: {total_months} months")
-#         csvwrite.writerow(f"Total: ${total_p_l:.0f}")
-#         csvwrite.writerow(f"Average Change: ${average_change:.2f}")
-#         csvwrite.writerow(f"Greatest Increase in Profits: {max_date} (${max(profit):.2f})")
-#         csvwrite.writerow(f"Greatest Decrease in Profits: {min_date} (${min(profit):.2f})")
+# Open the file using "write mode."
+with open(output_path, 'w', newline="") as csvfile:
+
+        # Initialise csv.writer
+        csvwriter = csv.writer(csvfile, delimiter=",")
+
+        # Write the first row
+        csvwriter.writerow(["Financial Analysis"])
+
+        # Write rows 2 to 7
+        csvwriter.writerow(["----------------------------"])
+        csvwriter.writerow([f"Total Months: {total_months} months"])
+        csvwriter.writerow([f"Total: ${total_p_l:.0f}"])
+        csvwriter.writerow([f"Average Change: ${average_change:.2f}"])
+        csvwriter.writerow([f"Greatest Increase in Profits: {greatest_increase_month} (${(greatest_increase):.2f})"])
+        csvwriter.writerow([f"Greatest Decrease in Profits: {greatest_decrease_month} (${(greatest_decrease):.2f})"])
 
 
 
